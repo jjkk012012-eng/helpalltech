@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AgriFood Lens | 농식품 후보기업 검색 서비스</title>
+<meta name="description" content="농식품 후보기업 데이터만 사용하는 공모전 MVP 서비스" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="topbar">
+  <a class="logo" href="#home" aria-label="AgriFood Lens">
+    <span class="logoIcon">A</span>
+    <span><b>AgriFood Lens</b><small>농식품 후보기업 전용 데이터 서비스</small></span>
+  </a>
+  <nav>
+    <a href="#overview">서비스</a>
+    <a href="#dashboard">현황</a>
+    <a href="#search">후보기업 검색</a>
+    <a href="#policy">추천 로직</a>
+  </nav>
+  <a class="topCta" href="#search">검색 시작</a>
+</header>
+
+<main id="home">
+  <section class="hero">
+    <div class="heroCopy">
+      <p class="eyebrow">PUBLIC DATA × AGRIFOOD CANDIDATE INTELLIGENCE</p>
+      <h1>농식품 후보기업만<br><span>깔끔하게 찾고,</span><br>정책지원 타깃까지 <br>추천합니다.</h1>
+      <p class="lead">선별된 농식품 제조 후보기업을 지역·품목·추천유형 기준으로 빠르게 탐색하고, 정책지원·판로개척·지역농산물 연계 대상을 한눈에 확인하는 서비스형 MVP입니다.</p>
+      <div class="heroButtons">
+        <a class="btn primary" href="#dashboard">데이터 현황 보기</a>
+        <a class="btn ghost" href="#search">후보기업 검색</a>
+      </div>
+      <div class="securityNotice"><b>권한 기반 조회</b><span>후보기업 정보를 화면에서 탐색하고, 담당자가 필요한 기업을 검토해 <br>지원 대상 발굴로 연결합니다.</span></div>
+    </div>
+    <aside class="heroPanel" aria-label="농식품 후보 데이터 요약">
+      <div class="panelTop"><span>Live candidate dataset</span><b id="heroTotal">-</b></div>
+      <div class="metricCards">
+        <article><small>검색 가능 후보</small><strong id="heroSearchable">-</strong><em>후보기업 기준</em></article>
+        <article><small>분류 품목군</small><strong id="heroCategoryTypes">-</strong><em>생산품 기반</em></article>
+        <article><small>추천 태그</small><strong id="heroRecTypes">-</strong><em>지원유형 기준</em></article>
+      </div>
+      <div class="rankingBox">
+        <div class="boxHead"><b>추천유형 분포</b><span>후보 데이터 기준</span></div>
+        <div id="heroRecs" class="rankList"></div>
+      </div>
+    </aside>
+  </section>
+
+  <section class="section" id="overview">
+    <div class="sectionHead">
+      <p>01 · Service</p>
+      <h2>이 서비스가 하는 일</h2>
+    </div>
+    <div class="serviceGrid">
+      <article><span>01</span><h3>농식품 후보 탐색</h3><p>선별된 농식품 제조 후보기업을 지역, 생산품, 원자재, <br>업종 기준으로 확인합니다.</p></article>
+      <article><span>02</span><h3>지역·품목 선별</h3><p>시도, 시군구, 품목군, 추천유형으로 정책지원 대상 후보를 <Br>빠르게 좁힙니다.</p></article>
+      <article><span>03</span><h3>정책·판로 추천</h3><p>소기업 정책지원, HACCP·위생 고도화, 판로·수출, <br>지역농산물 연계 후보를 태깅합니다.</p></article>
+    </div>
+  </section>
+
+  <section class="section" id="dashboard">
+    <div class="sectionHead split">
+      <div><p>02 · Dashboard</p><h2>농식품 후보 현황</h2></div>
+      <div class="caption">후보기업 데이터 기준</div>
+    </div>
+    <div class="kpiGrid">
+      <article><small>농식품 후보기업</small><strong id="kTotal">-</strong><span>탑재 데이터 기준</span></article>
+      <article><small>소기업 후보</small><strong id="kSmall">-</strong><span>정책지원 우선군</span></article>
+      <article><small>평균 종업원</small><strong id="kAvg">-</strong><span>후보 데이터 평균</span></article>
+      <article><small>품목군</small><strong id="kCats">-</strong><span>생산품 기반 분류</span></article>
+    </div>
+    <div class="dashGrid">
+      <article class="cardPanel"><div class="cardTitle"><h3>지역별 후보 분포</h3><span>Top 10</span></div><div id="regionBars" class="barList"></div></article>
+      <article class="cardPanel"><div class="cardTitle"><h3>품목군별 후보 분포</h3><span>Top 10</span></div><div id="categoryBars" class="barList"></div></article>
+    </div>
+  </section>
+
+  <section class="section clusterWrap">
+    <div class="sectionHead split">
+      <div><p>03 · Cluster</p><h2>클러스터 보드</h2></div>
+      <select id="clusterMode" class="selectSmall"><option value="region">지역 기준</option><option value="category">품목군 기준</option></select>
+    </div>
+    <div id="clusterBoard" class="clusterBoard"></div>
+  </section>
+
+  <section class="section" id="search">
+    <div class="sectionHead split">
+      <div><p>04 · Search</p><h2>농식품 후보기업 검색</h2></div>
+      <div class="caption">지역·품목·추천유형 기준 조회</div>
+    </div>
+    <div class="searchBox">
+      <label class="searchInput"><span>통합검색</span><input id="q" placeholder="회사명, 생산품, 원자재, 업종명, 주소 검색" /></label>
+      <div class="filters">
+        <label><span>지역</span><select id="region"><option value="">전체 지역</option></select></label>
+        <label><span>시군구</span><select id="sigungu"><option value="">전체 시군구</option></select></label>
+        <label><span>품목군</span><select id="category"><option value="">전체 품목군</option></select></label>
+        <label><span>추천유형</span><select id="recommend"><option value="">전체 추천유형</option></select></label>
+      </div>
+      <div class="resultLine"><b id="count">0</b><span>개 후보기업</span><em id="limitNote"></em></div>
+    </div>
+    <div id="cards" class="companyGrid"></div>
+  </section>
+
+  <section class="section" id="policy">
+    <div class="policyCard">
+      <div><p>05 · Recommendation</p><h2>추천 로직</h2><span>추천유형은 기업규모, 품목군, 생산품, 원재료, 업종명을 기준으로 서비스 화면에 태깅됩니다.</span></div>
+      <div id="policyBars" class="policyBars"></div>
+    </div>
+  </section>
+</main>
+<footer><b>AgriFood Lens</b><span>농식품 후보기업 전용 MVP · 정책지원 타깃 탐색 서비스</span></footer>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
